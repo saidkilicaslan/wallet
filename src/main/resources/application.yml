@@ -1,0 +1,23 @@
+spring:
+  mvc:
+    validation:
+      enabled: true
+  application:
+    name: wallet
+  datasource:
+    url: jdbc:h2:mem:wallet
+    driver-class-name: org.h2.Driver
+    username: sample
+    password: sample
+  h2:
+    console:
+      enabled: true
+server:
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    org:
+      springframework:
+        validation: DEBUG
