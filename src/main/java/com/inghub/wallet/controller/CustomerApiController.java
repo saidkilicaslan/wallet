@@ -29,12 +29,12 @@ public class CustomerApiController implements CustomerApi {
 
     @Override
     public ResponseEntity<CustomerResponse> create(@Valid @RequestBody CustomerCreate customerCreate) {
-        return new ResponseEntity<CustomerResponse>(CustomerMapper.toModel(customerService.createCustomer(CustomerMapper.toEntity(customerCreate))), HttpStatus.CREATED);
+        return new ResponseEntity<>(CustomerMapper.toModel(customerService.createCustomer(CustomerMapper.toEntity(customerCreate))), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<CustomerResponse> getCustomerByTckn(@PathVariable("tckn") String tckn) throws ApiException {
-        return new ResponseEntity<CustomerResponse>(CustomerMapper.toModel(customerService.getCustomerByTckn(tckn)), HttpStatus.OK);
+        return new ResponseEntity<>(CustomerMapper.toModel(customerService.getCustomerByTckn(tckn)), HttpStatus.OK);
     }
 
     @Override

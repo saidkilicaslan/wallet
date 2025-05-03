@@ -1,7 +1,6 @@
 package com.inghub.wallet.api;
 
 import com.inghub.wallet.exception.ApiException;
-import com.inghub.wallet.exception.IllegalRequestParamException;
 import com.inghub.wallet.model.CustomerCreate;
 import com.inghub.wallet.model.CustomerResponse;
 import io.swagger.v3.oas.annotations.Operation;

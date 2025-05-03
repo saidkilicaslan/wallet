@@ -1,10 +1,11 @@
 package com.inghub.wallet.mapper;
 
 import com.inghub.wallet.entity.Transaction;
-import com.inghub.wallet.model.TransactionRequest;
 import com.inghub.wallet.model.TransactionResponse;
 
-public class TransactionMapper {
+public final class TransactionMapper {
+    private TransactionMapper() {
+    }
 
     public static TransactionResponse toResponse(Transaction transaction) {
         TransactionResponse response = new TransactionResponse();
@@ -15,13 +16,5 @@ public class TransactionMapper {
         response.setWalletId(transaction.getWallet().getWalletId());
         response.setSourceType(transaction.getOppositePartyType());
         return response;
-    }
-
-    public static Transaction toEntity(TransactionRequest transactionRequest) {
-        Transaction transaction = new Transaction();
-        transaction.setAmount(transactionRequest.getAmount());
-        transaction.setOppositeParty(transactionRequest.getSource());
-        transaction.setOppositePartyType(transactionRequest.getSourceType());
-        return transaction;
     }
 }

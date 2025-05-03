@@ -9,8 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 @AllArgsConstructor
 public class DepositService {
@@ -19,11 +17,7 @@ public class DepositService {
 
     @Transactional
     public Transaction deposit(TransactionRequest transactionRequest) throws ApiException {
-        Wallet wallet = walletService.findWalletForUpdate(transactionRequest.getWalletId());
-        wallet.setBalance(wallet.getBalance().add(transactionRequest.getAmount()));
-        if (transactionRequest.getAmount().compareTo(BigDecimal.valueOf(1000)) <= 0) {
-            wallet.setUsableBalance(wallet.getUsableBalance().add(transactionRequest.getAmount()));
-        }
+        Wallet wallet = WalletDepositService.deposit(walletService.findWalletForUpdate(transactionRequest.getWalletId()), transactionRequest.getAmount());
         return transactionService.createTransaction(walletService.save(wallet), transactionRequest, TransactionType.DEPOSIT);
     }
 }

@@ -1,6 +1,5 @@
 package com.inghub.wallet.validation;
 
-import com.inghub.wallet.entity.Customer;
 import com.inghub.wallet.repository.CustomerRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

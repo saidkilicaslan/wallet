@@ -2,11 +2,9 @@ package com.inghub.wallet.controller;
 
 import com.inghub.wallet.api.WalletApi;
 import com.inghub.wallet.entity.Currency;
-import com.inghub.wallet.entity.Customer;
 import com.inghub.wallet.entity.Wallet;
 import com.inghub.wallet.exception.ApiException;
 import com.inghub.wallet.exception.IllegalRequestParamException;
-import com.inghub.wallet.mapper.CustomerMapper;
 import com.inghub.wallet.mapper.WalletMapper;
 import com.inghub.wallet.model.WalletCreate;
 import com.inghub.wallet.model.WalletResponse;
