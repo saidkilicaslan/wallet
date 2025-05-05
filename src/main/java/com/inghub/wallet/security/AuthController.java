@@ -4,7 +4,6 @@ import com.inghub.wallet.entity.Customer;
 import com.inghub.wallet.exception.ResultNotFoundException;
 import com.inghub.wallet.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,19 +21,18 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     private final CustomerRepository customerRepository;
-
+    private static final String SECRET_HEADER = "password";
     private static final Map<String, String> EMPLOYEE_CREDENTIALS = Map.of(
-            "admin", "password"
+            "admin", "admin"
     );
 
     @PostMapping("/login/employee")
     public ResponseEntity<?> employeeLogin(@RequestBody Map<String, String> request) {
         String username = request.get("username");
-        String password = request.get("password");
+        String password = request.get(SECRET_HEADER);
 
         if (EMPLOYEE_CREDENTIALS.containsKey(username) && EMPLOYEE_CREDENTIALS.get(username).equals(password)) {
-            String token = jwtUtil.generateToken(0L, "EMPLOYEE");
-            return ResponseEntity.ok(Map.of("token", token));
+            return ResponseEntity.ok(Map.of("token", jwtUtil.generateToken(0L, "EMPLOYEE")));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -44,15 +42,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> customerLogin(@RequestBody Map<String, String> request) {
-        String tckn = request.get("tckn");
-        String password = request.get("password");
-
-        Customer customer = customerRepository.findByTckn(tckn).orElseThrow(() -> new ResultNotFoundException("Customer not found"));
-        if (customer != null && customer.getPassword().equals(password)) {
-            String token = jwtUtil.generateToken(customer.getId(), "CUSTOMER");
-            return ResponseEntity.ok(Map.of("token", token));
+        Customer customer = customerRepository.findByTckn(request.get("tckn")).orElseThrow(() -> new ResultNotFoundException("Customer not found"));
+        if (customer != null && customer.getPassword().equals(request.get(SECRET_HEADER))) {
+            return ResponseEntity.ok(Map.of("token", jwtUtil.generateToken(customer.getId(), "CUSTOMER")));
         }
-
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }

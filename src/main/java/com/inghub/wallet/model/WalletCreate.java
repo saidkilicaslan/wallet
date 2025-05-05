@@ -1,6 +1,7 @@
 package com.inghub.wallet.model;
 
 import com.inghub.wallet.entity.Currency;
+import com.inghub.wallet.validation.ValidTckn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -20,6 +21,10 @@ public class WalletCreate {
 
     @NotNull
     private Boolean activeForWithdraw;
+
+    @NotNull
+    @ValidTckn
+    private String tckn;
 
 
 }

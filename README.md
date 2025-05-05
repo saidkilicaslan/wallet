@@ -53,7 +53,7 @@ The application is configured to use an in-memory **H2** database for testing pu
 - **Database:**  
   The app connects to an in-memory H2 database (`jdbc:h2:mem:wallet`) with the following credentials:
   - **Username:** `sample`
-  - **Password:** `sample`
+  - **Password:** `sample123`
 
 - **H2 Console:**  
   Available at: [http://localhost:8080/api/v1/h2-console](http://localhost:8080/api/v1/h2-console)  

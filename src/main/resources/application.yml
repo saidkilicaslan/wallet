@@ -8,7 +8,7 @@ spring:
     url: jdbc:h2:mem:wallet
     driver-class-name: org.h2.Driver
     username: sample
-    password: sample
+    password: sample123
   h2:
     console:
       enabled: true

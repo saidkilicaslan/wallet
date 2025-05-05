@@ -27,19 +27,21 @@ import java.util.List;
 @AllArgsConstructor
 public class WalletApiController implements WalletApi {
     private final WalletService walletService;
+
     @Override
     public ResponseEntity<WalletResponse> createWallet(@Valid @RequestBody WalletCreate walletCreateRequest) {
-        return null;
+        return new ResponseEntity<>(WalletMapper.toModel(walletService.createWallet(WalletMapper.toEntity(walletCreateRequest), walletCreateRequest.getTckn())), HttpStatus.CREATED);
+
     }
 
     @Override
     public ResponseEntity<List<WalletResponse>> listWallets(@PathVariable("tckn") String tckn,
-                                            @RequestParam(name = "currency", required = false) Currency currency,
-                                            @RequestParam(name = "exactAmount", required = false) BigDecimal exactAmount,
-                                            @RequestParam(name = "minAmount", required = false) BigDecimal minAmount,
-                                            @RequestParam(name = "maxAmount", required = false) BigDecimal maxAmount,
-                                            @RequestParam(name = "page", defaultValue = "0") Integer page,
-                                            @RequestParam(name = "size", defaultValue = "10") Integer size, HttpServletResponse response) throws ApiException {
+                                                            @RequestParam(name = "currency", required = false) Currency currency,
+                                                            @RequestParam(name = "exactAmount", required = false) BigDecimal exactAmount,
+                                                            @RequestParam(name = "minAmount", required = false) BigDecimal minAmount,
+                                                            @RequestParam(name = "maxAmount", required = false) BigDecimal maxAmount,
+                                                            @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                            @RequestParam(name = "size", defaultValue = "10") Integer size, HttpServletResponse response) throws ApiException {
         if (page < 0 || size <= 0) {
             throw new IllegalRequestParamException("Page number and size must be greater than 0");
         }
@@ -47,7 +49,7 @@ public class WalletApiController implements WalletApi {
         if (walletPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        if(walletPage.getTotalPages() > 1){
+        if (walletPage.getTotalPages() > 1) {
             response.setHeader("X-Total-Count", String.valueOf(walletPage.getTotalElements()));
             response.setHeader("X-Total-Pages", String.valueOf(walletPage.getTotalPages()));
             response.setHeader("X-Current-Page", String.valueOf(page));

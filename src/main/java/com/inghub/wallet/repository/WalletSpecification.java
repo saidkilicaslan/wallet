@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class WalletSpecification {
+
+    public static final String AMOUNT = "amount";
+
     private WalletSpecification() {
     }
 
@@ -27,13 +30,13 @@ public final class WalletSpecification {
                 predicates.add(cb.equal(root.get("currency"), currency));
             }
             if (exactAmount != null) {
-                predicates.add(cb.equal(root.get("amount"), exactAmount));
+                predicates.add(cb.equal(root.get(AMOUNT), exactAmount));
             }
             if (minAmount != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get("amount"), minAmount));
+                predicates.add(cb.greaterThanOrEqualTo(root.get(AMOUNT), minAmount));
             }
             if (maxAmount != null) {
-                predicates.add(cb.lessThanOrEqualTo(root.get("amount"), maxAmount));
+                predicates.add(cb.lessThanOrEqualTo(root.get(AMOUNT), maxAmount));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };

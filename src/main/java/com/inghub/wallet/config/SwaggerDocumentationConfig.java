@@ -1,6 +1,5 @@
 package com.inghub.wallet.config;
 
-import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -16,6 +15,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @Slf4j
 public class SwaggerDocumentationConfig {
+
+    public static final String BEARER_AUTH = "bearerAuth";
 
     @Bean
     public InternalResourceViewResolver defaultViewResolver() {
@@ -33,11 +34,11 @@ public class SwaggerDocumentationConfig {
                     .license(new License().name("Apache License Version 2.0").url("https://www.apache.org/licenses/LICENSE-2.0"))
                     .version("4.0.0")
                     .contact(contact))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH))
                 .components(new Components()
-                        .addSecuritySchemes("bearerAuth",
+                        .addSecuritySchemes(BEARER_AUTH,
                                 new SecurityScheme()
-                                        .name("bearerAuth")
+                                        .name(BEARER_AUTH)
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
