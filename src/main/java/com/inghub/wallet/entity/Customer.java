@@ -26,4 +26,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Wallet> wallets;
+
+    private String password;
 }
